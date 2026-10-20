@@ -13,3 +13,6 @@ coverage/
 .DS_Store
 Thumbs.db
 .vscode/
+# Local database files and temporary documentation tools
+.local-data/
+.week2-tools/

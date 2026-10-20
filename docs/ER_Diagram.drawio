@@ -1,0 +1,150 @@
+<mxfile host="app.diagrams.net" type="device" version="24.7.17">
+  <diagram id="student-records-week-2" name="Week 2 Database Design">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0" background="#F4F7FB">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="page" value="" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#F4F7FB;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="1400" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="eyebrow" value="VERSTECH LABS  /  SOFTWARE DEVELOPMENT  /  WEEK 02" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=13;fontStyle=1;fontColor=#087E8B;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="35" width="1240" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="title" value="Student Records Manager" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=34;fontStyle=1;fontColor=#142B45;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="78" width="1240" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="Logical ER diagram  |  MongoDB + Mongoose  |  Abdullah Aslam" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=17;fontColor=#526579;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="139" width="1240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="separator" value="" style="rounded=0;fillColor=#D6E1EB;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="40" y="191" width="1320" height="2" as="geometry" />
+        </mxCell>
+
+        <mxCell id="user" value="" style="rounded=1;arcSize=3;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#C9D6E2;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="235" width="365" height="430" as="geometry" />
+        </mxCell>
+        <mxCell id="user-header" value="User  /  users" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#142B45;strokeColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=22;fontStyle=1;fontColor=#FFFFFF;spacingLeft=20;" vertex="1" parent="1">
+          <mxGeometry x="40" y="235" width="365" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="user-id" value="_id: ObjectId  [PK]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontStyle=1;fontColor=#087E8B;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="311" width="325" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="user-name" value="name: String  [required]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontColor=#253D53;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="349" width="325" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="user-email" value="email: String  [required, unique]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontColor=#253D53;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="387" width="325" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="user-password" value="password: String  [required]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontColor=#253D53;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="425" width="325" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="user-role" value="role: String  [admin | teacher]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontColor=#253D53;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="463" width="325" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="user-created" value="createdAt: Date  [automatic]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontColor=#253D53;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="501" width="325" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="user-updated" value="updatedAt: Date  [automatic]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontColor=#253D53;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="539" width="325" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="user-note" value="Role defaults to teacher.&#xa;Password hashing belongs to future auth.&#xa;No User relationship is defined in Week 2." style="text;html=0;strokeColor=none;fillColor=#EEF3F8;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=13;fontColor=#526579;spacingLeft=12;spacingRight=8;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="55" y="585" width="335" height="65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="student" value="" style="rounded=1;arcSize=3;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#C9D6E2;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="455" y="235" width="365" height="430" as="geometry" />
+        </mxCell>
+        <mxCell id="student-header" value="Student  /  students" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#142B45;strokeColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=22;fontStyle=1;fontColor=#FFFFFF;spacingLeft=20;" vertex="1" parent="1">
+          <mxGeometry x="455" y="235" width="365" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="student-id" value="_id: ObjectId  [PK]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontStyle=1;fontColor=#087E8B;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="475" y="311" width="325" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="student-name" value="name: String  [required]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontColor=#253D53;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="475" y="349" width="325" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="student-roll" value="rollNumber: String  [required, unique]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontColor=#253D53;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="475" y="387" width="325" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="student-class" value="className: String  [required]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontColor=#253D53;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="475" y="425" width="325" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="student-email" value="email: String  [optional]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontColor=#253D53;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="475" y="463" width="325" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="student-phone" value="phone: String  [optional]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontColor=#253D53;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="475" y="501" width="325" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="student-created" value="createdAt: Date  [automatic]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontColor=#253D53;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="475" y="539" width="325" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="student-updated" value="updatedAt: Date  [automatic]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontColor=#253D53;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="475" y="577" width="325" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="student-note" value="A student may have no marks records yet." style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=13;fontColor=#526579;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="475" y="622" width="325" height="24" as="geometry" />
+        </mxCell>
+
+        <mxCell id="marks" value="" style="rounded=1;arcSize=3;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#C9D6E2;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="940" y="235" width="420" height="430" as="geometry" />
+        </mxCell>
+        <mxCell id="marks-header" value="Marks  /  marks" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#087E8B;strokeColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=22;fontStyle=1;fontColor=#FFFFFF;spacingLeft=20;" vertex="1" parent="1">
+          <mxGeometry x="940" y="235" width="420" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="marks-id" value="_id: ObjectId  [PK]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontStyle=1;fontColor=#087E8B;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="960" y="311" width="380" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="marks-student" value="student: ObjectId  [REF / FK*, required]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontStyle=1;fontColor=#087E8B;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="960" y="349" width="380" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="marks-subject" value="subject: String  [required, trim, lowercase]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontColor=#253D53;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="960" y="387" width="380" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="marks-obtained" value="obtainedMarks: Number  [required]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontColor=#253D53;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="960" y="425" width="380" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="marks-total" value="totalMarks: Number  [required, &gt; 0]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontColor=#253D53;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="960" y="463" width="380" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="marks-created" value="createdAt: Date  [automatic]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontColor=#253D53;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="960" y="501" width="380" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="marks-updated" value="updatedAt: Date  [automatic]" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontColor=#253D53;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="960" y="539" width="380" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="marks-rules" value="UNIQUE (student, subject)&#xa;0 &lt;= obtainedMarks &lt;= totalMarks&#xa;One subject record per student." style="text;html=0;strokeColor=none;fillColor=#E8F5F5;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=14;fontColor=#075E67;spacingLeft=12;spacingRight=8;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="955" y="585" width="390" height="65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="student-marks" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;startArrow=ERone;startFill=0;endArrow=ERmany;endFill=0;strokeColor=#087E8B;strokeWidth=2;startSize=14;endSize=16;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.3;entryDx=0;entryDy=0;" edge="1" parent="1" source="student" target="marks">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="relationship-one" value="1" style="text;html=0;strokeColor=none;fillColor=#F4F7FB;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=17;fontStyle=1;fontColor=#087E8B;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="825" y="329" width="28" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="relationship-many" value="0..*" style="text;html=0;strokeColor=none;fillColor=#F4F7FB;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=17;fontStyle=1;fontColor=#087E8B;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="894" y="329" width="40" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="relationship-label" value="has" style="text;html=0;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=14;fontColor=#526579;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="850" y="377" width="60" height="26" as="geometry" />
+        </mxCell>
+
+        <mxCell id="relationship-note-bg" value="" style="rounded=1;arcSize=6;whiteSpace=wrap;html=0;fillColor=#E8F5F5;strokeColor=#CAE4E6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="705" width="1320" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="relationship-note-title" value="ONE STUDENT, MANY SUBJECT RESULTS" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=13;fontStyle=1;fontColor=#087E8B;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="716" width="1260" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="relationship-note" value="Student._id is stored in Marks.student. Each Marks record belongs to exactly one student; a student can have zero or more marks records." style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontColor=#253D53;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="743" width="1280" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" value="PK = primary identifier (_id)     REF / FK* = ObjectId reference     0..* = zero or many     unique = database unique index" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=14;fontColor=#526579;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="803" width="1320" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="reference-caveat" value="* MongoDB references are not enforced foreign keys. Mongoose ref does not automatically check that the referenced student exists." style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=14;fontColor=#526579;spacing=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="839" width="1320" height="26" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
