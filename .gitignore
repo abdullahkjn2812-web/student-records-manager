@@ -16,3 +16,7 @@ Thumbs.db
 # Local database files and temporary documentation tools
 .local-data/
 .week2-tools/
+# Documentation generator/source files (final PDFs and PNGs are tracked)
+docs/*.html
+docs/*.drawio
+docs/week2-evidence/*.html
