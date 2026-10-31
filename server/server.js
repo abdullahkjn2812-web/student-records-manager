@@ -4,11 +4,15 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const studentRoutes = require("./routes/studentRoutes");
+const requestLogger = require("./middleware/requestLogger");
 
 dotenv.config({ path: path.join(__dirname, ".env"), quiet: true });
 
 const app = express();
 app.use(express.json({ limit: "100kb" }));
+
+// Terminal Request Logger
+app.use(requestLogger);
 
 app.get("/health", (req, res) => {
   const connected = mongoose.connection.readyState === 1;
