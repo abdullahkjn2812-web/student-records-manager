@@ -5,6 +5,11 @@
  * Uses zero external dependencies.
  */
 const requestLogger = (req, res, next) => {
+  // Ignore automatic browser favicon requests so logs remain clean
+  if (req.url === "/favicon.ico") {
+    return next();
+  }
+
   const start = Date.now();
   const timestamp = new Date().toLocaleTimeString();
 
