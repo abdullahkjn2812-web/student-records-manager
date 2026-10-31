@@ -3,11 +3,16 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
+const studentRoutes = require("./routes/studentRoutes");
+const requestLogger = require("./middleware/requestLogger");
 
 dotenv.config({ path: path.join(__dirname, ".env"), quiet: true });
 
 const app = express();
 app.use(express.json({ limit: "100kb" }));
+
+// Terminal Request Logger
+app.use(requestLogger);
 
 app.get("/health", (req, res) => {
   const connected = mongoose.connection.readyState === 1;
@@ -17,6 +22,9 @@ app.get("/health", (req, res) => {
     database: connected ? "connected" : "disconnected",
   });
 });
+
+// Student CRUD Routes
+app.use("/api/students", studentRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
