@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
+const studentRoutes = require("./routes/studentRoutes");
 
 dotenv.config({ path: path.join(__dirname, ".env"), quiet: true });
 
@@ -17,6 +18,9 @@ app.get("/health", (req, res) => {
     database: connected ? "connected" : "disconnected",
   });
 });
+
+// Student CRUD Routes
+app.use("/api/students", studentRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
