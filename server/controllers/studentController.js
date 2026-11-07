@@ -82,12 +82,27 @@ const createStudent = async (req, res) => {
 };
 
 /**
- * @desc    Get all student records
+ * @desc    Get all student records (supports ?search= query by name, rollNumber, or className)
  * @route   GET /api/students
  */
 const getAllStudents = async (req, res) => {
   try {
-    const students = await Student.find().sort({ createdAt: -1 });
+    const { search } = req.query;
+    let filter = {};
+
+    if (search && typeof search === "string" && search.trim()) {
+      const escaped = search.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const searchRegex = new RegExp(escaped, "i");
+      filter = {
+        $or: [
+          { name: searchRegex },
+          { rollNumber: searchRegex },
+          { className: searchRegex },
+        ],
+      };
+    }
+
+    const students = await Student.find(filter).sort({ createdAt: -1 });
     return res.status(200).json({
       success: true,
       count: students.length,
