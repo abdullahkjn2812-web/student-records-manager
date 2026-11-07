@@ -4,8 +4,10 @@ const { spawn } = require("node:child_process");
 const { once } = require("node:events");
 const path = require("node:path");
 const mongoose = require("../server/node_modules/mongoose");
+const jwt = require("../server/node_modules/jsonwebtoken");
 const Student = require("../server/models/Student");
 const Marks = require("../server/models/Marks");
+const User = require("../server/models/User");
 
 const testUri =
   process.env.TEST_MONGO_URI ||
@@ -13,6 +15,8 @@ const testUri =
 
 let serverProcess;
 let baseUrl;
+let authToken;
+let authHeaders;
 
 function launchServer(uri) {
   const projectRoot = path.resolve(__dirname, "..");
@@ -71,6 +75,25 @@ before(async () => {
   await mongoose.connect(testUri, { serverSelectionTimeoutMS: 5000 });
   await Student.deleteMany({});
   await Marks.deleteMany({});
+  await User.deleteMany({});
+
+  const admin = await User.create({
+    name: "Admin User",
+    email: "admin@example.com",
+    password: "password123",
+    role: "admin",
+  });
+
+  authToken = jwt.sign(
+    { id: admin._id, role: admin.role },
+    process.env.JWT_SECRET || "student_records_manager_verstech_jwt_secret_2026",
+    { expiresIn: "1h" },
+  );
+
+  authHeaders = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${authToken}`,
+  };
 
   serverProcess = launchServer(testUri);
   const message = await waitForMessage(serverProcess);
@@ -98,7 +121,7 @@ let createdStudentId;
 test("1. POST /api/students - creates a student successfully", async () => {
   const res = await fetch(`${baseUrl}/api/students`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeaders,
     body: JSON.stringify({
       name: "Ahmed Khan",
       rollNumber: "BCS-001",
@@ -123,7 +146,7 @@ test("1. POST /api/students - creates a student successfully", async () => {
 test("2. POST /api/students - rejects duplicate roll number with 409 Conflict", async () => {
   const res = await fetch(`${baseUrl}/api/students`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeaders,
     body: JSON.stringify({
       name: "Another Ahmed",
       rollNumber: "BCS-001",
@@ -141,7 +164,7 @@ test("3. POST /api/students - rejects missing required fields with 400 Bad Reque
   // Missing name
   const resNoName = await fetch(`${baseUrl}/api/students`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeaders,
     body: JSON.stringify({ rollNumber: "BCS-002", className: "Semester 5" }),
   });
   assert.equal(resNoName.status, 400);
@@ -149,7 +172,7 @@ test("3. POST /api/students - rejects missing required fields with 400 Bad Reque
   // Missing rollNumber
   const resNoRoll = await fetch(`${baseUrl}/api/students`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeaders,
     body: JSON.stringify({ name: "Sara Ali", className: "Semester 5" }),
   });
   assert.equal(resNoRoll.status, 400);
@@ -157,7 +180,7 @@ test("3. POST /api/students - rejects missing required fields with 400 Bad Reque
   // Missing className
   const resNoClass = await fetch(`${baseUrl}/api/students`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeaders,
     body: JSON.stringify({ name: "Sara Ali", rollNumber: "BCS-002" }),
   });
   assert.equal(resNoClass.status, 400);
@@ -166,7 +189,7 @@ test("3. POST /api/students - rejects missing required fields with 400 Bad Reque
 test("4. POST /api/students - rejects invalid email and phone formats with 400", async () => {
   const resBadEmail = await fetch(`${baseUrl}/api/students`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeaders,
     body: JSON.stringify({
       name: "Sara Ali",
       rollNumber: "BCS-002",
@@ -178,7 +201,7 @@ test("4. POST /api/students - rejects invalid email and phone formats with 400",
 
   const resBadPhone = await fetch(`${baseUrl}/api/students`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeaders,
     body: JSON.stringify({
       name: "Sara Ali",
       rollNumber: "BCS-002",
@@ -190,7 +213,9 @@ test("4. POST /api/students - rejects invalid email and phone formats with 400",
 });
 
 test("5. GET /api/students - retrieves all students", async () => {
-  const res = await fetch(`${baseUrl}/api/students`);
+  const res = await fetch(`${baseUrl}/api/students`, {
+    headers: authHeaders,
+  });
   assert.equal(res.status, 200);
   const data = await res.json();
   assert.equal(data.success, true);
@@ -200,7 +225,9 @@ test("5. GET /api/students - retrieves all students", async () => {
 });
 
 test("6. GET /api/students/:id - retrieves a single student by ID", async () => {
-  const res = await fetch(`${baseUrl}/api/students/${createdStudentId}`);
+  const res = await fetch(`${baseUrl}/api/students/${createdStudentId}`, {
+    headers: authHeaders,
+  });
   assert.equal(res.status, 200);
   const data = await res.json();
   assert.equal(data.success, true);
@@ -209,7 +236,9 @@ test("6. GET /api/students/:id - retrieves a single student by ID", async () => 
 });
 
 test("7. GET /api/students/:id - returns 400 for invalid MongoDB ID", async () => {
-  const res = await fetch(`${baseUrl}/api/students/invalid-id-123`);
+  const res = await fetch(`${baseUrl}/api/students/invalid-id-123`, {
+    headers: authHeaders,
+  });
   assert.equal(res.status, 400);
   const data = await res.json();
   assert.equal(data.success, false);
@@ -218,7 +247,9 @@ test("7. GET /api/students/:id - returns 400 for invalid MongoDB ID", async () =
 
 test("8. GET /api/students/:id - returns 404 for non-existent student ID", async () => {
   const fakeId = new mongoose.Types.ObjectId().toString();
-  const res = await fetch(`${baseUrl}/api/students/${fakeId}`);
+  const res = await fetch(`${baseUrl}/api/students/${fakeId}`, {
+    headers: authHeaders,
+  });
   assert.equal(res.status, 404);
   const data = await res.json();
   assert.equal(data.success, false);
@@ -228,7 +259,7 @@ test("8. GET /api/students/:id - returns 404 for non-existent student ID", async
 test("9. PUT /api/students/:id - updates an existing student", async () => {
   const res = await fetch(`${baseUrl}/api/students/${createdStudentId}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeaders,
     body: JSON.stringify({
       name: "Ahmed Khan Updated",
       className: "Semester 6",
@@ -248,7 +279,7 @@ test("10. PUT /api/students/:id - prevents updating to an already existing roll 
   // First create a second student
   await fetch(`${baseUrl}/api/students`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeaders,
     body: JSON.stringify({
       name: "Fatima Zahra",
       rollNumber: "BCS-002",
@@ -259,7 +290,7 @@ test("10. PUT /api/students/:id - prevents updating to an already existing roll 
   // Now try to update first student's roll number to BCS-002
   const res = await fetch(`${baseUrl}/api/students/${createdStudentId}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeaders,
     body: JSON.stringify({
       rollNumber: "BCS-002",
     }),
@@ -274,7 +305,7 @@ test("10. PUT /api/students/:id - prevents updating to an already existing roll 
 test("11. PUT /api/students/:id - returns 400 for invalid ID and 404 for non-existent ID", async () => {
   const resBadId = await fetch(`${baseUrl}/api/students/not-an-id`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeaders,
     body: JSON.stringify({ name: "Testing" }),
   });
   assert.equal(resBadId.status, 400);
@@ -282,7 +313,7 @@ test("11. PUT /api/students/:id - returns 400 for invalid ID and 404 for non-exi
   const fakeId = new mongoose.Types.ObjectId().toString();
   const res404 = await fetch(`${baseUrl}/api/students/${fakeId}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeaders,
     body: JSON.stringify({ name: "Testing" }),
   });
   assert.equal(res404.status, 404);
@@ -291,6 +322,7 @@ test("11. PUT /api/students/:id - returns 400 for invalid ID and 404 for non-exi
 test("12. DELETE /api/students/:id - deletes a student successfully", async () => {
   const res = await fetch(`${baseUrl}/api/students/${createdStudentId}`, {
     method: "DELETE",
+    headers: authHeaders,
   });
 
   assert.equal(res.status, 200);
@@ -299,19 +331,23 @@ test("12. DELETE /api/students/:id - deletes a student successfully", async () =
   assert.match(data.message, /deleted successfully/i);
 
   // Verify it is gone from database
-  const checkRes = await fetch(`${baseUrl}/api/students/${createdStudentId}`);
+  const checkRes = await fetch(`${baseUrl}/api/students/${createdStudentId}`, {
+    headers: authHeaders,
+  });
   assert.equal(checkRes.status, 404);
 });
 
 test("13. DELETE /api/students/:id - returns 400 for invalid ID and 404 for non-existent ID", async () => {
   const resBadId = await fetch(`${baseUrl}/api/students/bad-id`, {
     method: "DELETE",
+    headers: authHeaders,
   });
   assert.equal(resBadId.status, 400);
 
   const fakeId = new mongoose.Types.ObjectId().toString();
   const res404 = await fetch(`${baseUrl}/api/students/${fakeId}`, {
     method: "DELETE",
+    headers: authHeaders,
   });
   assert.equal(res404.status, 404);
 });

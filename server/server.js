@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const studentRoutes = require("./routes/studentRoutes");
+const authRoutes = require("./routes/authRoutes");
+const dashboardRoutes = require("./routes/dashboardRoutes");
 const requestLogger = require("./middleware/requestLogger");
 
 dotenv.config({ path: path.join(__dirname, ".env"), quiet: true });
@@ -23,9 +25,16 @@ app.get("/health", (req, res) => {
   });
 });
 
+// Authentication Routes
+app.use("/api/auth", authRoutes);
+
+// Dashboard Routes
+app.use("/api/dashboard", dashboardRoutes);
+
 // Student CRUD Routes
 app.use("/api/students", studentRoutes);
 
+// 404 Fallback Route
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
 });

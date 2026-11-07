@@ -4,75 +4,99 @@
 **Track:** Software Development — Verstech Labs 2026
 
 ## Overview
-A planned web application to help school and academy administrators and teachers manage student records, subject-wise marks, grades and summary statistics.
+A web application to help school and academy administrators and teachers manage student records, subject-wise marks, grades and summary statistics with secure user authentication and role-based permissions.
 
-## Planned features
-1. Student record management (create, view, update, delete)
-2. Search by student name or roll number
-3. Subject-wise marks management
-4. Automatic total, percentage and grade calculation
-5. User login and logout
-6. Role-based access for administrators and teachers
-7. Basic academic dashboard
+## Features
+1. **User Authentication & Security:** JWT-based login/logout with passwords hashed using `bcryptjs`.
+2. **Role-Based Authorization:** Distinct access levels for `admin` (full permissions) and `teacher` (view, search, create, update).
+3. **Student Records CRUD:** Complete Create, Read, Update, and Delete operations with duplicate roll number prevention.
+4. **Student Search Engine:** Live search across student records by name, roll number, or class (`/api/students?search=...`).
+5. **Academic Dashboard:** Live dynamic statistics showing student counts, academic evaluations, average percentage, and passing rates.
+6. **Modern React Frontend:** Single-page application built with React, featuring protected routes, authentication state, search, and dashboard.
 
-## Technology stack
-- Frontend: React (JavaScript) — later weeks
-- Backend: Node.js and Express
-- Database: MongoDB with Mongoose
-- Environment: dotenv
-- API testing: Postman / Native Test Runner
-- Version control: Git and GitHub
+## Technology Stack
+- **Frontend:** React (JavaScript, Vite)
+- **Backend:** Node.js and Express 5
+- **Database:** MongoDB with Mongoose
+- **Security:** JSON Web Tokens (JWT), Bcrypt password hashing
+- **Environment:** dotenv
+- **Testing:** Node.js Native Test Runner (50 automated tests)
+- **Version Control:** Git and GitHub
 
-## Repository structure
-- `client/`: React frontend (later weeks)
+## Repository Structure
+- `client/`: React frontend application
+  - `src/context/`: Authentication context & token management
+  - `src/components/`: Navigation bar, protected route wrappers
+  - `src/pages/`: Login, Dashboard, and Student Management pages
+  - `vite.config.js`: Dev server & API proxy configuration
 - `server/`: Express backend
-  - `config/db.js`: MongoDB connection
+  - `config/db.js`: MongoDB connection & index initialization
   - `models/`: User, Student and Marks schemas
-  - `controllers/`: Student CRUD controller (`studentController.js`)
-  - `routes/`: Student API routes (`studentRoutes.js`)
-  - `server.js`: app entry point, `/health`, and route mounting
-  - `.env.example`: sample environment variables
-- `tests/`: model, CRUD, and integration checks
-- `docs/`: proposal, requirements, Week 2 design, ER diagram, and Week 3 implementation report
+  - `controllers/`: Auth, Student, and Dashboard controllers
+  - `middleware/`: Request logger, JWT protection, and RBAC authorization
+  - `routes/`: Auth, Student, and Dashboard API routers
+  - `server.js`: App entry point and route mounting
+  - `.env.example`: Sample environment variables
+- `tests/`: 50 automated tests (models, CRUD, auth & RBAC)
+- `docs/`: Proposals, requirements, ER diagrams, screenshots, and weekly implementation reports
 
 ## Setup & Running
 
-1. Install and start MongoDB locally.
-2. Copy `server/.env.example` to `server/.env` and keep the URI pointing at your own database.
-3. From `server/` run `npm install` then `npm start`.
-4. Open `http://127.0.0.1:5000/health`. A successful response includes `"database": "connected"`.
-
-The HTTP server starts only after the MongoDB connection succeeds. Do not commit `server/.env`.
-
-### API Endpoints (Week 3)
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/health` | Server and database health check |
-| `POST` | `/api/students` | Create a new student record |
-| `GET` | `/api/students` | Retrieve all student records |
-| `GET` | `/api/students/:id` | Retrieve an individual student by ID |
-| `PUT` | `/api/students/:id` | Update an existing student |
-| `DELETE` | `/api/students/:id` | Delete an existing student |
-
-### Running Tests
-
-From `server/` directory:
+### 1. Database & Backend Server
 ```bash
+# 1. Start MongoDB locally
+# In PowerShell: Start-Service -Name MongoDB
+
+# 2. Configure environment
+cd server
+cp .env.example .env
+
+# 3. Install dependencies & run backend (port 5000)
+npm install
+npm start
+```
+Verify backend at `http://127.0.0.1:5000/health`.
+
+### 2. Frontend Application (React)
+In a separate terminal:
+```bash
+cd client
+npm install
+npm run dev
+```
+Open `http://localhost:5173` in your browser.
+
+### API Endpoints
+
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| `GET` | `/health` | Public | System & database health status |
+| `POST` | `/api/auth/register` | Public | Register new user account |
+| `POST` | `/api/auth/login` | Public | Authenticate user & receive JWT token |
+| `GET` | `/api/auth/me` | Protected | Get authenticated user profile |
+| `POST` | `/api/auth/logout` | Public | Log out user |
+| `GET` | `/api/dashboard/stats` | Protected | Get dynamic academic dashboard statistics |
+| `GET` | `/api/students` | Protected | List all students or filter with `?search=<term>` |
+| `POST` | `/api/students` | Protected (Admin/Teacher) | Create a new student record |
+| `GET` | `/api/students/:id` | Protected | Retrieve individual student by ID |
+| `PUT` | `/api/students/:id` | Protected (Admin/Teacher) | Update an existing student |
+| `DELETE` | `/api/students/:id` | Protected (Admin only) | Delete an existing student |
+
+### Running Automated Tests
+
+Run all 50 tests across model validation, student CRUD, and authentication suites:
+```bash
+cd server
 npm test
 ```
-Or from the project root:
-```bash
-node --test tests/models.test.js tests/studentCrud.test.js
-```
 
-## Internship progress
-- **Week 1:** project proposal, requirements documentation and initial repository structure
-- **Week 2:** database design, ER diagram, MongoDB connection and Express skeleton
-- **Week 3:** core student CRUD operations, business logic, validation and automated testing
-- **Week 4:** authentication and advanced features
-- **Week 5:** testing and debugging
-- **Week 6:** deployment and final presentation
+## Internship Progress
+- **Week 1:** Project proposal, requirements documentation and initial repository structure
+- **Week 2:** Database design, ER diagram, MongoDB connection and Express skeleton
+- **Week 3:** Core student CRUD operations, business logic, validation and automated testing
+- **Week 4:** JWT authentication, role-based authorization, student search, dashboard statistics, and React frontend
+- **Week 5:** Testing and debugging
+- **Week 6:** Deployment and final presentation
 
 ## Documentation
 - [Project Proposal](docs/Project_Proposal.pdf)
@@ -80,3 +104,4 @@ node --test tests/models.test.js tests/studentCrud.test.js
 - [Week 2 Database Design](docs/Week_02_Database_Design.pdf)
 - [ER Diagram](docs/ER_Diagram.png)
 - [Week 3 Implementation Report](docs/Week_03_Implementation_Report.md)
+- [Week 4 Implementation Report](docs/Week_04_Implementation_Report.md)
