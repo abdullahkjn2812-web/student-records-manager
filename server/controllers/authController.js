@@ -4,12 +4,26 @@ const User = require("../models/User");
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
+ * Get JWT secret securely, rejecting unconfigured secrets in production
+ */
+const getJwtSecret = () => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("JWT_SECRET environment variable is missing in production.");
+    }
+    return "student_records_manager_verstech_jwt_secret_2026";
+  }
+  return secret;
+};
+
+/**
  * Generate signed JWT token
  */
 const generateToken = (id, role) => {
   return jwt.sign(
     { id, role },
-    process.env.JWT_SECRET || "student_records_manager_verstech_jwt_secret_2026",
+    getJwtSecret(),
     {
       expiresIn: process.env.JWT_EXPIRE || "24h",
     },

@@ -20,7 +20,7 @@ A web application to help school and academy administrators and teachers manage 
 - **Database:** MongoDB with Mongoose
 - **Security:** JSON Web Tokens (JWT), Bcrypt password hashing
 - **Environment:** dotenv
-- **Testing:** Node.js Native Test Runner (50 automated tests)
+- **Testing:** Node.js Native Test Runner (60 automated tests)
 - **Version Control:** Git and GitHub
 
 ## Repository Structure
@@ -37,7 +37,7 @@ A web application to help school and academy administrators and teachers manage 
   - `routes/`: Auth, Student, and Dashboard API routers
   - `server.js`: App entry point and route mounting
   - `.env.example`: Sample environment variables
-- `tests/`: 50 automated tests (models, CRUD, auth & RBAC)
+- `tests/`: 60 automated tests (models, CRUD, auth, edge cases & security)
 - `docs/`: Proposals, requirements, ER diagrams, screenshots, and weekly implementation reports
 
 ## Setup & Running
@@ -84,7 +84,7 @@ Open `http://localhost:5173` in your browser.
 
 ### Running Automated Tests
 
-Run all 50 tests across model validation, student CRUD, and authentication suites:
+Run all 60 tests across model validation, student CRUD, authentication, and edge cases:
 ```bash
 cd server
 npm test
@@ -95,8 +95,8 @@ npm test
 - **Week 2:** Database design, ER diagram, MongoDB connection and Express skeleton
 - **Week 3:** Core student CRUD operations, business logic, validation and automated testing
 - **Week 4:** JWT authentication, role-based authorization, student search, dashboard statistics, and React frontend
-- **Week 5:** Testing and debugging
-- **Week 6:** Deployment and final presentation
+- **Week 5:** Testing and debugging (60 automated tests, edge-case hardening, security checks, and QA report)
+- **Week 6:** Final marks management, automatic grade cards, and deployment
 
 ## Documentation
 - [Project Proposal](docs/Project_Proposal.pdf)

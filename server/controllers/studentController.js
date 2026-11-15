@@ -15,29 +15,62 @@ const createStudent = async (req, res) => {
 
     // Validate required fields
     if (!name || typeof name !== "string" || !name.trim()) {
-      return res.status(400).json({ success: false, message: "Student name is required." });
+      return res
+        .status(400)
+        .json({ success: false, message: "Student name is required." });
+    }
+    if (name.trim().length > 100) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Student name cannot exceed 100 characters." });
     }
 
     if (!rollNumber || typeof rollNumber !== "string" || !rollNumber.trim()) {
-      return res.status(400).json({ success: false, message: "Roll number is required." });
+      return res
+        .status(400)
+        .json({ success: false, message: "Roll number is required." });
+    }
+    if (rollNumber.trim().length > 30) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Roll number cannot exceed 30 characters." });
     }
 
     if (!className || typeof className !== "string" || !className.trim()) {
-      return res.status(400).json({ success: false, message: "Class name is required." });
+      return res
+        .status(400)
+        .json({ success: false, message: "Class name is required." });
+    }
+    if (className.trim().length > 50) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Class name cannot exceed 50 characters." });
     }
 
     const trimmedRoll = rollNumber.trim();
 
     // Validate optional email format
-    if (email && (typeof email !== "string" || !EMAIL_REGEX.test(email.trim()))) {
-      return res.status(400).json({ success: false, message: "Please provide a valid email address." });
+    if (
+      email &&
+      (typeof email !== "string" || !EMAIL_REGEX.test(email.trim()))
+    ) {
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "Please provide a valid email address.",
+        });
     }
 
     // Validate optional phone format
-    if (phone && (typeof phone !== "string" || !PHONE_REGEX.test(phone.trim()))) {
+    if (
+      phone &&
+      (typeof phone !== "string" || !PHONE_REGEX.test(phone.trim()))
+    ) {
       return res.status(400).json({
         success: false,
-        message: "Please provide a valid phone number (7-20 digits and valid symbols).",
+        message:
+          "Please provide a valid phone number (7-20 digits and valid symbols).",
       });
     }
 
@@ -179,21 +212,42 @@ const updateStudent = async (req, res) => {
     // Validate fields if provided
     if (name !== undefined) {
       if (typeof name !== "string" || !name.trim()) {
-        return res.status(400).json({ success: false, message: "Student name cannot be empty." });
+        return res
+          .status(400)
+          .json({ success: false, message: "Student name cannot be empty." });
+      }
+      if (name.trim().length > 100) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Student name cannot exceed 100 characters." });
       }
       student.name = name.trim();
     }
 
     if (className !== undefined) {
       if (typeof className !== "string" || !className.trim()) {
-        return res.status(400).json({ success: false, message: "Class name cannot be empty." });
+        return res
+          .status(400)
+          .json({ success: false, message: "Class name cannot be empty." });
+      }
+      if (className.trim().length > 50) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Class name cannot exceed 50 characters." });
       }
       student.className = className.trim();
     }
 
     if (rollNumber !== undefined) {
       if (typeof rollNumber !== "string" || !rollNumber.trim()) {
-        return res.status(400).json({ success: false, message: "Roll number cannot be empty." });
+        return res
+          .status(400)
+          .json({ success: false, message: "Roll number cannot be empty." });
+      }
+      if (rollNumber.trim().length > 30) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Roll number cannot exceed 30 characters." });
       }
       const trimmedRoll = rollNumber.trim();
       if (trimmedRoll !== student.rollNumber) {
@@ -216,7 +270,12 @@ const updateStudent = async (req, res) => {
         student.email = undefined;
       } else {
         if (typeof email !== "string" || !EMAIL_REGEX.test(email.trim())) {
-          return res.status(400).json({ success: false, message: "Please provide a valid email address." });
+          return res
+            .status(400)
+            .json({
+              success: false,
+              message: "Please provide a valid email address.",
+            });
         }
         student.email = email.trim();
       }
@@ -229,7 +288,8 @@ const updateStudent = async (req, res) => {
         if (typeof phone !== "string" || !PHONE_REGEX.test(phone.trim())) {
           return res.status(400).json({
             success: false,
-            message: "Please provide a valid phone number (7-20 digits and valid symbols).",
+            message:
+              "Please provide a valid phone number (7-20 digits and valid symbols).",
           });
         }
         student.phone = phone.trim();
