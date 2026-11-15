@@ -2,6 +2,20 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 /**
+ * Get JWT secret securely, rejecting unconfigured secrets in production
+ */
+const getJwtSecret = () => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("JWT_SECRET environment variable is missing in production.");
+    }
+    return "student_records_manager_verstech_jwt_secret_2026";
+  }
+  return secret;
+};
+
+/**
  * Protect Middleware
  * Verifies JWT token in Authorization Bearer header
  * and attaches authenticated user document to req.user.
@@ -24,10 +38,7 @@ const protect = async (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET || "student_records_manager_verstech_jwt_secret_2026",
-    );
+    const decoded = jwt.verify(token, getJwtSecret());
 
     const user = await User.findById(decoded.id).select("-password");
     if (!user) {
