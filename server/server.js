@@ -1,4 +1,5 @@
 const path = require("node:path");
+const fs = require("node:fs");
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
@@ -6,6 +7,7 @@ const connectDB = require("./config/db");
 const studentRoutes = require("./routes/studentRoutes");
 const authRoutes = require("./routes/authRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
+const marksRoutes = require("./routes/marksRoutes");
 const requestLogger = require("./middleware/requestLogger");
 
 dotenv.config({ path: path.join(__dirname, ".env"), quiet: true });
@@ -33,6 +35,21 @@ app.use("/api/dashboard", dashboardRoutes);
 
 // Student CRUD Routes
 app.use("/api/students", studentRoutes);
+
+// Marks & Grade Management Routes
+app.use("/api/marks", marksRoutes);
+
+// Production Static Client Serving
+const clientDistPath = path.join(__dirname, "../client/dist");
+if (fs.existsSync(clientDistPath)) {
+  app.use(express.static(clientDistPath));
+  app.use((req, res, next) => {
+    if (req.method === "GET" && !req.path.startsWith("/api") && req.path !== "/health") {
+      return res.sendFile(path.join(clientDistPath, "index.html"));
+    }
+    next();
+  });
+}
 
 // 404 Fallback Route
 app.use((req, res) => {
