@@ -6,6 +6,7 @@ const connectDB = require("./config/db");
 const studentRoutes = require("./routes/studentRoutes");
 const authRoutes = require("./routes/authRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
+const marksRoutes = require("./routes/marksRoutes");
 const requestLogger = require("./middleware/requestLogger");
 
 dotenv.config({ path: path.join(__dirname, ".env"), quiet: true });
@@ -33,6 +34,9 @@ app.use("/api/dashboard", dashboardRoutes);
 
 // Student CRUD Routes
 app.use("/api/students", studentRoutes);
+
+// Marks & Grade Management Routes
+app.use("/api/marks", marksRoutes);
 
 // 404 Fallback Route
 app.use((req, res) => {
