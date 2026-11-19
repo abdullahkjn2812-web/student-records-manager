@@ -62,7 +62,7 @@ const startServer = async () => {
     throw new Error("PORT must be an integer between 0 and 65535.");
   }
 
-  const host = process.env.HOST ?? (process.env.RAILWAY_ENVIRONMENT ? "0.0.0.0" : "127.0.0.1");
+  const host = process.env.HOST ?? (process.env.RAILWAY_ENVIRONMENT_NAME ? "0.0.0.0" : "127.0.0.1");
 
   await connectDB();
   try {
