@@ -62,14 +62,16 @@ const startServer = async () => {
     throw new Error("PORT must be an integer between 0 and 65535.");
   }
 
+  const host = process.env.HOST ?? (process.env.RAILWAY_ENVIRONMENT ? "0.0.0.0" : "127.0.0.1");
+
   await connectDB();
   try {
     const server = await new Promise((resolve, reject) => {
-      const listener = app.listen(port, "127.0.0.1");
+      const listener = app.listen(port, host);
       listener.once("error", reject);
       listener.once("listening", () => resolve(listener));
     });
-    console.log(`Server listening on http://127.0.0.1:${server.address().port}`);
+    console.log(`Server listening on http://${host}:${server.address().port}`);
     return server;
   } catch (error) {
     await mongoose.disconnect();
