@@ -1,0 +1,13 @@
+{
+  "name": "student-records-manager",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Root manifest used by Railway to build the React client and run the Express server",
+  "scripts": {
+    "build": "npm install --prefix client --include=dev && npm run build --prefix client && npm install --prefix server --omit=dev",
+    "start": "npm start --prefix server"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
