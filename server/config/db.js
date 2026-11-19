@@ -9,14 +9,16 @@ const connectDB = async () => {
   }
 
   try {
-    await mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 5000 });
+    await mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 15000,
+    });
     // Create the collections and their unique indexes before accepting requests.
     await Promise.all([User.init(), Student.init(), Marks.init()]);
     console.log(`MongoDB connected: ${mongoose.connection.name}`);
-  } catch {
+  } catch (error) {
     await mongoose.disconnect();
-    // Connection errors may contain credentials; do not print the raw URI/error.
-    throw new Error("MongoDB setup failed. Check MONGO_URI, database availability and index permissions.");
+    console.error(`MongoDB setup error: ${error.name} - ${error.message}`);
+    throw new Error(`MongoDB setup failed: ${error.message}`);
   }
 };
 
