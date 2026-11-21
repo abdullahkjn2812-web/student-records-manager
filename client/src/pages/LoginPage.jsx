@@ -52,7 +52,7 @@ export default function LoginPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="e.g. admin@school.test"
+              placeholder="e.g. you@example.com"
               required
               autoFocus
             />
@@ -81,14 +81,14 @@ export default function LoginPage() {
             <button
               type="button"
               className="btn btn-demo"
-              onClick={() => handleQuickLogin("admin@school.test", "adminPassword123")}
+              onClick={() => handleQuickLogin("you@example.com", "YourPass123")}
             >
               👑 Fill Admin (Full Access)
             </button>
             <button
               type="button"
               className="btn btn-demo"
-              onClick={() => handleQuickLogin("teacher@school.test", "teacherPassword123")}
+              onClick={() => handleQuickLogin("teacher@example.com", "TeacherPass123")}
             >
               🧑‍🏫 Fill Teacher (Read & Edit)
             </button>
