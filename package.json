@@ -4,6 +4,7 @@
   "private": true,
   "description": "Root manifest used by Railway to build the React client and run the Express server",
   "scripts": {
+    "test": "npm test --prefix server",
     "build": "npm install --prefix client --include=dev && npm run build --prefix client && npm install --prefix server --omit=dev",
     "start": "npm start --prefix server"
   },
