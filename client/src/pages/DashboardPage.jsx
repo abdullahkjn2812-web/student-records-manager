@@ -114,8 +114,10 @@ export default function DashboardPage({ setActiveTab }) {
       <div className="dashboard-grid">
         <div className="card">
           <div className="card-header">
-            <h3 className="card-title">Performance Summary</h3>
-            <span className="badge badge-subtle">MongoDB Aggregation</span>
+            <div>
+              <h3 className="card-title">Performance Summary</h3>
+              <p className="card-caption">A quick view of current academic performance</p>
+            </div>
           </div>
           <div className="summary-list">
             <div className="summary-item">
@@ -129,12 +131,12 @@ export default function DashboardPage({ setActiveTab }) {
               </span>
             </div>
             <div className="summary-item">
-              <span className="summary-label">Active Roles</span>
-              <span className="summary-val">Administrator, Teacher</span>
+              <span className="summary-label">Overall Average</span>
+              <span className="summary-val">{academicSummary.overallAveragePercentage || 0}%</span>
             </div>
             <div className="summary-item">
-              <span className="summary-label">Authentication Model</span>
-              <span className="summary-val">JWT (JSON Web Token) + Bcrypt</span>
+              <span className="summary-label">Passing Rate</span>
+              <span className="summary-val text-green">{academicSummary.passingRate || 0}%</span>
             </div>
           </div>
         </div>
