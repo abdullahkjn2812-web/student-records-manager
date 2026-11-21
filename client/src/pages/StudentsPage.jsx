@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
+import AcademicRecordsModal from "../components/AcademicRecordsModal";
 
 export default function StudentsPage() {
   const { authFetch, isAdmin } = useAuth();
@@ -20,6 +21,7 @@ export default function StudentsPage() {
     phone: "",
   });
   const [submitting, setSubmitting] = useState(false);
+  const [academicStudent, setAcademicStudent] = useState(null);
 
   useEffect(() => {
     fetchStudents();
@@ -257,6 +259,13 @@ export default function StudentsPage() {
                         >
                           ✏️ Edit
                         </button>
+                        <button
+                          className="btn-action btn-academic"
+                          onClick={() => setAcademicStudent(student)}
+                          title="View grades and GPA"
+                        >
+                          Grades & GPA
+                        </button>
                         {isAdmin ? (
                           <button
                             className="btn-action btn-delete"
@@ -363,6 +372,13 @@ export default function StudentsPage() {
             </form>
           </div>
         </div>
+      )}
+      {academicStudent && (
+        <AcademicRecordsModal
+          student={academicStudent}
+          authFetch={authFetch}
+          onClose={() => setAcademicStudent(null)}
+        />
       )}
     </div>
   );
